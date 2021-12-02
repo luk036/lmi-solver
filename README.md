@@ -1,6 +1,5 @@
 # lmi-solver
 
-![Python application](https://github.com/luk036/lmi-solver/workflows/Python%20application/badge.svg)
 [![Python application w/ Coverage](https://github.com/luk036/lmi-solver/actions/workflows/python-app.yml/badge.svg)](https://github.com/luk036/lmi-solver/actions/workflows/python-app.yml)
 [![Multi-Platforms](https://github.com/luk036/lmi-solver/actions/workflows/multi-platforms.yml/badge.svg)](https://github.com/luk036/lmi-solver/actions/workflows/multi-platforms.yml)
 [![Documentation Status](https://readthedocs.org/projects/lmi-solver/badge/?version=latest)](https://lmi-solver.readthedocs.io/en/latest/?badge=latest)
