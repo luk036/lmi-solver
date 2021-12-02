@@ -18,7 +18,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         git clone https://github.com/luk036/ellalgo.git
-        pip install ellalgo
+        pip install ./ellalgo
 
     - name: Lint with flake8
       run: |

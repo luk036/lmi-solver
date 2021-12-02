@@ -26,7 +26,7 @@ jobs:
         pip install flake8 pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
         git clone https://github.com/luk036/ellalgo.git
-        pip install ellalgo
+        pip install ./ellalgo
         python setup.py develop
 
     - name: Lint with flake8

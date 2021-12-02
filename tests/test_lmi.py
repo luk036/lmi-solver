@@ -11,7 +11,7 @@ from ellalgo.ell import ell
 from lmi_solver.lmi_old_oracle import lmi_old_oracle
 from lmi_solver.lmi_oracle import lmi_oracle
 
-Arr = Union[np.ndarray]
+Arr = Union[np.ndarray, float]
 Cut = Tuple[Arr, float]
 
 
