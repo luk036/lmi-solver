@@ -1,0 +1,51 @@
+# -*- coding: utf-8 -*-
+import numpy as np
+from .chol_ext import chol_ext
+from typing import Tuple
+
+Cut = Tuple[np.ndarray, float]
+
+
+class lmi2_oracle:
+    """
+        Oracle for Linear Matrix Inequality constraint
+            0 <= F * x <= U
+    """
+
+    def __init__(self, F, U):
+        self.F = F
+        self.U = U
+        self.A = np.zeros(U.shape)
+        self.S = np.zeros(U.shape)
+        self.Q = chol_ext(len(U))
+
+    def __call__(self, x: np.ndarray) -> Optional[Cut]:
+        #A = self.U.copy()
+        #S = np.zeros(A.shape)
+        n = len(x)
+
+        def getS(i, j):
+            self.S[i, j] = sum(self.F[k][i, j] * x[k] for k in range(n))
+            return self.S[i, j]
+
+        def getA(i, j):
+            # for k in range(n):
+            #     S[i, j] = self.F[k][i, j] * x[k]
+            self.A[i, j] = self.U[i, j]
+            self.A[i, j] -= sum(self.F[k][i, j] * x[k] for k in range(n))
+            return self.A[i, j]
+
+        if not self.Q.factor(getA):
+            f = self.Q.witness()
+            # p = len(v)
+            fj = f + self.Q.sym_quad(self.U)
+            #fj = v @ S[:p, :p] @ v
+            g = np.array([self.Q.sym_quad(self.F[i]) for i in range(n)])
+            return g, (f, fj)
+
+        if not self.Q.factor(getS):
+            f = self.Q.witness()
+            # p = len(v)
+            fj = f + self.Q.sym_quad(self.U)
+            g = np.array([-self.Q.sym_quad(self.F[i]) for i in range(n)])
+            return g, (f, fj)

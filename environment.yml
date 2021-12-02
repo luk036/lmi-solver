@@ -1,0 +1,10 @@
+name: lmi-solver
+channels:
+  - conda-forge
+dependencies:
+  - pytest
+  - pytest-benchmark
+  - pytest-cov
+  - ellalgo
+  - numpy
+  - decorator
