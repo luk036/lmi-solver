@@ -10,19 +10,18 @@ Linear Matrix Inequalities Python Code
 
 ## Features
 
--   No square-root per evaluation.
--   Suport lazy evaluation.
--   Pure Python code.
+- No square-root per evaluation.
+- Suport lazy evaluation.
+- Pure Python code.
 
 ## Installation
 
--   The core LMI oracle depends on the `ellalgo` and `numpy` modules.
+- The core LMI oracle depends on the `ellalgo` and `numpy` modules.
 
 ## See also
 
--   [lmi-solver-cpp](https://github.com/luk036/lmi-solver-cpp)
--   [Presentation Slides](https://luk036.github.io/cvx)
-
+- [lmi-solver-cpp](https://github.com/luk036/lmi-solver-cpp)
+- [Presentation Slides](https://luk036.github.io/cvx)
 
 <!-- pyscaffold-notes -->
 

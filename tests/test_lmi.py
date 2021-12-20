@@ -5,9 +5,9 @@ import time
 from typing import Optional, Tuple, Union
 
 import numpy as np
-
 from ellalgo.cutting_plane import cutting_plane_dc
 from ellalgo.ell import ell
+
 from lmi_solver.lmi_old_oracle import lmi_old_oracle
 from lmi_solver.lmi_oracle import lmi_oracle
 
