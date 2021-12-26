@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function
 
-import time
+# import time
 from typing import Optional, Tuple, Union
 
 import numpy as np
@@ -67,7 +67,7 @@ class my_oracle:
         return (self.c, 0.0), f0
 
 
-def run_lmi(oracle, duration=0.000001):
+def run_lmi(oracle):
     """[summary]
 
     Arguments:
@@ -83,7 +83,7 @@ def run_lmi(oracle, duration=0.000001):
     E = ell(10.0, x0)
     P = my_oracle(oracle)
     _, _, ell_info = cutting_plane_dc(P, E, float("inf"))
-    time.sleep(duration)
+    # time.sleep(duration)
 
     # fmt = '{:f} {} {} {}'
     # print(fmt.format(fb, niter, feasible, status))
