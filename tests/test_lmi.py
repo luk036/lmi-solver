@@ -52,10 +52,10 @@ class my_oracle:
         Returns:
             Tuple[Cut, float]: [description]
         """
-        if (cut := self.lmi1(x)):
+        if cut := self.lmi1(x):
             return cut, None
 
-        if (cut := self.lmi2(x)):
+        if cut := self.lmi2(x):
             return cut, None
 
         f0 = self.c @ x

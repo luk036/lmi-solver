@@ -10,6 +10,7 @@ Linear Matrix Inequalities Python Code
 
 ## Features
 
+- python >= 3.8
 - No square-root per evaluation.
 - Suport lazy evaluation.
 - Pure Python code.
