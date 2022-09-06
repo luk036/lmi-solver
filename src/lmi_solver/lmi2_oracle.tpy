@@ -19,7 +19,7 @@ class lmi2_oracle:
         self.S = np.zeros(U.shape)
         self.Q = chol_ext(len(U))
 
-    def __call__(self, x: np.ndarray) -> Optional[Cut]:
+    def assess_feas(self, x: np.ndarray) -> Optional[Cut]:
         #A = self.U.copy()
         #S = np.zeros(A.shape)
         n = len(x)

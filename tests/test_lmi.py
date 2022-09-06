@@ -5,7 +5,7 @@ from __future__ import print_function
 from typing import Optional, Tuple, Union
 
 import numpy as np
-from ellalgo.cutting_plane import cutting_plane_dc
+from ellalgo.cutting_plane import cutting_plane_optim
 from ellalgo.ell import ell
 
 from lmi_solver.lmi_old_oracle import lmi_old_oracle
@@ -42,7 +42,7 @@ class my_oracle:
         self.lmi1 = oracle(F1, B1)
         self.lmi2 = oracle(F2, B2)
 
-    def __call__(self, x: Arr, t: float) -> Tuple[Cut, Optional[float]]:
+    def assess_optim(self, x: Arr, t: float) -> Tuple[Cut, Optional[float]]:
         """[summary]
 
         Arguments:
@@ -52,10 +52,10 @@ class my_oracle:
         Returns:
             Tuple[Cut, float]: [description]
         """
-        if cut := self.lmi1(x):
+        if (cut := self.lmi1.assess_feas(x)):
             return cut, None
 
-        if cut := self.lmi2(x):
+        if (cut := self.lmi2.assess_feas(x)):
             return cut, None
 
         f0 = self.c @ x
@@ -79,7 +79,7 @@ def run_lmi(oracle):
     x0 = np.array([0.0, 0.0, 0.0])  # initial x0
     E = ell(10.0, x0)
     P = my_oracle(oracle)
-    _, _, ell_info = cutting_plane_dc(P, E, float("inf"))
+    _, _, ell_info = cutting_plane_optim(P, E, float("inf"))
     # time.sleep(duration)
 
     # fmt = '{:f} {} {} {}'

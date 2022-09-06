@@ -30,7 +30,7 @@ class lmi_oracle:
         self.F0 = B
         self.Q = chol_ext(len(B))
 
-    def __call__(self, x: Arr) -> Optional[Cut]:
+    def assess_feas(self, x: Arr) -> Optional[Cut]:
         """[summary]
 
         Arguments:
