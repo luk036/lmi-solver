@@ -79,14 +79,14 @@ def run_lmi(oracle):
     x0 = np.array([0.0, 0.0, 0.0])  # initial x0
     E = ell(10.0, x0)
     P = my_oracle(oracle)
-    _, _, ell_info = cutting_plane_optim(P, E, float("inf"))
+    xb, _, num_iters, _ = cutting_plane_optim(P, E, float("inf"))
     # time.sleep(duration)
 
     # fmt = '{:f} {} {} {}'
     # print(fmt.format(fb, niter, feasible, status))
     # print(xb)
-    assert ell_info.feasible
-    return ell_info.num_iters
+    assert xb is not None
+    return num_iters
 
 
 def test_lmi_lazy(benchmark):
