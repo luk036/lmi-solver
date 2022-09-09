@@ -7,7 +7,7 @@ import numpy as np
 Arr = Union[np.ndarray]
 
 
-class chol_ext:
+class LDLTMgr:
     """LDLT factorization (mainly for LMI oracles)
 
     - LDL^T square-root-free version
@@ -47,11 +47,11 @@ class chol_ext:
         """
         return self.factor(lambda i, j: A[i, j])
 
-    def factor(self, getA: Callable[[int, int], float]) -> bool:
+    def factor(self, get_elem: Callable[[int, int], float]) -> bool:
         """Perform Cholesky Factorization (square-root free version)
 
         Arguments:
-            getA (callable): function to access symmetric matrix
+            get_elem (callable): function to access symmetric matrix
 
          Construct $A(i, j)$ on demand, lazy evalution
         """
@@ -59,12 +59,12 @@ class chol_ext:
         self.p = (0, 0)
         for i in range(self._n):
             # j = start
-            d = getA(i, start)
+            d = get_elem(i, start)
             for j in range(start, i):
                 self._T[j, i] = d  # keep it for later use
                 self._T[i, j] = d / self._T[j, j]  # the L[i, j]
                 s = j + 1
-                d = getA(i, s) - (self._T[i, start:s] @ self._T[start:s, s])
+                d = get_elem(i, s) - (self._T[i, start:s] @ self._T[start:s, s])
             self._T[i, i] = d
             if d > 0.0:
                 continue

@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 import numpy as np
-from .chol_ext import chol_ext
+from .chol_ext import LDLTMgr
 from typing import Tuple
 
 Cut = Tuple[np.ndarray, float]
 
 
-class lmi2_oracle:
+class LMI2Oracle:
     """
         Oracle for Linear Matrix Inequality constraint
             0 <= F * x <= U
@@ -17,7 +17,7 @@ class lmi2_oracle:
         self.U = U
         self.A = np.zeros(U.shape)
         self.S = np.zeros(U.shape)
-        self.Q = chol_ext(len(U))
+        self.Q = LDLTMgr(len(U))
 
     def assess_feas(self, x: np.ndarray) -> Optional[Cut]:
         #A = self.U.copy()
@@ -28,14 +28,14 @@ class lmi2_oracle:
             self.S[i, j] = sum(self.F[k][i, j] * x[k] for k in range(n))
             return self.S[i, j]
 
-        def getA(i, j):
+        def get_elem(i, j):
             # for k in range(n):
             #     S[i, j] = self.F[k][i, j] * x[k]
             self.A[i, j] = self.U[i, j]
             self.A[i, j] -= sum(self.F[k][i, j] * x[k] for k in range(n))
             return self.A[i, j]
 
-        if not self.Q.factor(getA):
+        if not self.Q.factor(get_elem):
             f = self.Q.witness()
             # p = len(v)
             fj = f + self.Q.sym_quad(self.U)

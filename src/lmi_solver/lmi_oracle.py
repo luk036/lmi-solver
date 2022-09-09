@@ -3,13 +3,13 @@ from typing import Optional, Tuple, Union
 
 import numpy as np
 
-from .chol_ext import chol_ext
+from .chol_ext import LDLTMgr
 
 Arr = Union[np.ndarray]
 Cut = Tuple[Arr, float]
 
 
-class lmi_oracle:
+class LMIOracle:
     """Oracle for Linear Matrix Inequality constraint.
 
     This oracle solves the following feasibility problem:
@@ -28,7 +28,7 @@ class lmi_oracle:
         """
         self.F = F
         self.F0 = B
-        self.Q = chol_ext(len(B))
+        self.Q = LDLTMgr(len(B))
 
     def assess_feas(self, x: Arr) -> Optional[Cut]:
         """[summary]
@@ -40,13 +40,12 @@ class lmi_oracle:
             Optional[Cut]: [description]
         """
 
-        def getA(i, j):
-            n = len(x)
-            return self.F0[i, j] - sum(self.F[k][i, j] * x[k] for k in range(n))
+        def get_elem(i, j):
+            return self.F0[i, j] - sum(
+                Fk[i, j] * xk for Fk, xk in zip(self.F, x))
 
-        if self.Q.factor(getA):
+        if self.Q.factor(get_elem):
             return None
-
         ep = self.Q.witness()
         g = np.array([self.Q.sym_quad(Fk) for Fk in self.F])
         return g, ep

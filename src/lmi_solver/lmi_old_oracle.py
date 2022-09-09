@@ -3,13 +3,13 @@ from typing import Optional, Tuple, Union
 
 import numpy as np
 
-from .chol_ext import chol_ext
+from .chol_ext import LDLTMgr
 
 Arr = Union[np.ndarray]
 Cut = Tuple[Arr, float]
 
 
-class lmi_old_oracle:
+class LMIOldOracle:
     """Oracle for Linear Matrix Inequality constraint.
 
     This oracle solves the following feasibility problem:
@@ -29,7 +29,7 @@ class lmi_old_oracle:
         self.F = F
         self.F0 = B
         # self.A = np.zeros(B.shape)
-        self.Q = chol_ext(len(B))
+        self.Q = LDLTMgr(len(B))
 
     def assess_feas(self, x: Arr) -> Optional[Cut]:
         """[summary]

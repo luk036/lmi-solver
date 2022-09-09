@@ -3,13 +3,13 @@ from typing import Optional, Tuple, Union
 
 import numpy as np
 
-from .chol_ext import chol_ext
+from .chol_ext import LDLTMgr
 
 Arr = Union[np.ndarray]
 Cut = Tuple[Arr, float]
 
 
-class lmi0_oracle:
+class LMI0Oracle:
     """Oracle for Linear Matrix Inequality constraint
 
     find  x
@@ -24,7 +24,7 @@ class lmi0_oracle:
             F (List[Arr]): [description]
         """
         self.F = F
-        self.Q = chol_ext(len(F[0]))
+        self.Q = LDLTMgr(len(F[0]))
 
     def assess_feas(self, x: Arr) -> Optional[Cut]:
         """[summary]
@@ -36,11 +36,11 @@ class lmi0_oracle:
             Optional[Cut]: [description]
         """
 
-        def getA(i, j):
+        def get_elem(i, j):
             n = len(x)
             return sum(self.F[k][i, j] * x[k] for k in range(n))
 
-        if not self.Q.factor(getA):
+        if not self.Q.factor(get_elem):
             ep = self.Q.witness()
             g = np.array([-self.Q.sym_quad(Fk) for Fk in self.F])
             return g, ep

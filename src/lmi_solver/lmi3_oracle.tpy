@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import numpy as np
-from .chol_ext import chol_ext
+from .chol_ext import LDLTMgr
 from typing import Tuple
 
 Cut = Tuple[np.ndarray, float]
@@ -17,19 +17,19 @@ class lmi3_oracle:
         self.F = F
         self.F0 = -B
         self.A = np.zeros(B.shape)
-        self.Q = chol_ext(len(B))
+        self.Q = LDLTMgr(len(B))
 
     def assess_feas(self, x: np.ndarray) -> Optional[Cut]:
         # A = self.F0.copy()
         n = len(x)
 
-        def getA(i, j):
+        def get_elem(i, j):
             self.A[i, j] = self.F0[i, j]
             self.A[i, j] += sum(self.F[k][i, j] * x[k]
                                 for k in range(n))
             return self.A[i, j]
 
-        if self.Q.factor(getA):
+        if self.Q.factor(get_elem):
             return None
         f = self.Q.witness()
         # p = len(v)

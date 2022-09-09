@@ -6,10 +6,10 @@ from typing import Optional, Tuple, Union
 
 import numpy as np
 from ellalgo.cutting_plane import cutting_plane_optim
-from ellalgo.ell import ell
+from ellalgo.ell import Ell
 
-from lmi_solver.lmi_old_oracle import lmi_old_oracle
-from lmi_solver.lmi_oracle import lmi_oracle
+from lmi_solver.lmi_old_oracle import LMIOldOracle
+from lmi_solver.lmi_oracle import LMIOracle
 
 Arr = Union[np.ndarray, float]
 Cut = Tuple[Arr, float]
@@ -77,7 +77,7 @@ def run_lmi(oracle):
         [type]: [description]
     """
     x0 = np.array([0.0, 0.0, 0.0])  # initial x0
-    E = ell(10.0, x0)
+    E = Ell(10.0, x0)
     P = my_oracle(oracle)
     xb, _, num_iters, _ = cutting_plane_optim(P, E, float("inf"))
     # time.sleep(duration)
@@ -95,8 +95,8 @@ def test_lmi_lazy(benchmark):
     Arguments:
         benchmark ([type]): [description]
     """
-    result = benchmark(run_lmi, lmi_oracle)
-    assert result == 113
+    result = benchmark(run_lmi, LMIOracle)
+    assert result == 112
 
 
 def test_lmi_old(benchmark):
@@ -105,5 +105,5 @@ def test_lmi_old(benchmark):
     Arguments:
         benchmark ([type]): [description]
     """
-    result = benchmark(run_lmi, lmi_old_oracle)
-    assert result == 113
+    result = benchmark(run_lmi, LMIOldOracle)
+    assert result == 112
