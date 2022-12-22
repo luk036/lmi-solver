@@ -1,31 +1,27 @@
+<!-- These are examples of badges you might want to add to your README:
+     please update the URLs accordingly
+
+[![Built Status](https://api.cirrus-ci.com/github/<USER>/lmi-solver.svg?branch=main)](https://cirrus-ci.com/github/<USER>/lmi-solver)
+[![ReadTheDocs](https://readthedocs.org/projects/lmi-solver/badge/?version=latest)](https://lmi-solver.readthedocs.io/en/stable/)
+[![Coveralls](https://img.shields.io/coveralls/github/<USER>/lmi-solver/main.svg)](https://coveralls.io/r/<USER>/lmi-solver)
+[![PyPI-Server](https://img.shields.io/pypi/v/lmi-solver.svg)](https://pypi.org/project/lmi-solver/)
+[![Conda-Forge](https://img.shields.io/conda/vn/conda-forge/lmi-solver.svg)](https://anaconda.org/conda-forge/lmi-solver)
+[![Monthly Downloads](https://pepy.tech/badge/lmi-solver/month)](https://pepy.tech/project/lmi-solver)
+[![Twitter](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&label=Twitter)](https://twitter.com/lmi-solver)
+-->
+
+[![Project generated with PyScaffold](https://img.shields.io/badge/-PyScaffold-005CA0?logo=pyscaffold)](https://pyscaffold.org/)
+
 # lmi-solver
 
-[![Python application w/ Coverage](https://github.com/luk036/lmi-solver/actions/workflows/python-app.yml/badge.svg)](https://github.com/luk036/lmi-solver/actions/workflows/python-app.yml)
-[![Multi-Platforms](https://github.com/luk036/lmi-solver/actions/workflows/multi-platforms.yml/badge.svg)](https://github.com/luk036/lmi-solver/actions/workflows/multi-platforms.yml)
-[![Documentation Status](https://readthedocs.org/projects/lmi-solver/badge/?version=latest)](https://lmi-solver.readthedocs.io/en/latest/?badge=latest)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/a2f75bd3cc1e4c34be4741bdd61168ba)](https://app.codacy.com/app/luk036/lmi-solver?utm_source=github.com&utm_medium=referral&utm_content=luk036/lmi-solver&utm_campaign=badger)
-[![codecov](https://codecov.io/gh/luk036/lmi-solver/branch/master/graph/badge.svg)](https://codecov.io/gh/luk036/lmi-solver)
+> Linear Matrix Inequalties Python Code
 
-Linear Matrix Inequalities Python Code
+A longer description of your project goes here...
 
-## Features
-
-- No square-root per evaluation.
-- Suport lazy evaluation.
-- Pure Python code.
-
-## Installation
-
-- The core LMI oracle depends on the `ellalgo` and `numpy` modules.
-
-## See also
-
-- [lmi-solver-cpp](https://github.com/luk036/lmi-solver-cpp)
-- [Presentation Slides](https://luk036.github.io/cvx)
 
 <!-- pyscaffold-notes -->
 
 ## Note
 
-This project has been set up using PyScaffold 4.0.2. For details and usage
+This project has been set up using PyScaffold 4.3.1. For details and usage
 information on PyScaffold see https://pyscaffold.org/.
