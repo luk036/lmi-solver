@@ -11,6 +11,7 @@
 -->
 
 [![Project generated with PyScaffold](https://img.shields.io/badge/-PyScaffold-005CA0?logo=pyscaffold)](https://pyscaffold.org/)
+[![Documentation Status](https://readthedocs.org/projects/lmi-solver/badge/?version=latest)](https://lmi-solver.readthedocs.io/en/latest/?badge=latest)
 
 # lmi-solver
 
