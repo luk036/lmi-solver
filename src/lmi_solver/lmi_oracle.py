@@ -41,8 +41,7 @@ class LMIOracle:
         """
 
         def get_elem(i, j):
-            return self.F0[i, j] - sum(
-                Fk[i, j] * xk for Fk, xk in zip(self.F, x))
+            return self.F0[i, j] - sum(Fk[i, j] * xk for Fk, xk in zip(self.F, x))
 
         if self.Q.factor(get_elem):
             return None
