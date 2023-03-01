@@ -22,6 +22,10 @@ A longer description of your project goes here...
 
 <!-- pyscaffold-notes -->
 
+## Used In
+
+- [corr-solver](https://github.com/luk036/corr-solver)
+
 ## Note
 
 This project has been set up using PyScaffold 4.3.1. For details and usage
