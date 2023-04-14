@@ -79,7 +79,7 @@ def run_lmi(oracle):
     x0 = np.array([0.0, 0.0, 0.0])  # initial x0
     E = Ell(10.0, x0)
     P = my_oracle(oracle)
-    xb, _, num_iters, _ = cutting_plane_optim(P, E, float("inf"))
+    xb, _, num_iters = cutting_plane_optim(P, E, float("inf"))
     # time.sleep(duration)
 
     # fmt = '{:f} {} {} {}'
