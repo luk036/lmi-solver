@@ -15,7 +15,7 @@ Arr = Union[np.ndarray, float]
 Cut = Tuple[Arr, float]
 
 
-class my_oracle:
+class MyOracle:
     def __init__(self, oracle):
         """[summary]
 
@@ -76,16 +76,16 @@ def run_lmi(oracle):
     Returns:
         [type]: [description]
     """
-    x0 = np.array([0.0, 0.0, 0.0])  # initial x0
-    E = Ell(10.0, x0)
-    P = my_oracle(oracle)
-    xb, _, num_iters = cutting_plane_optim(P, E, float("inf"))
+    xinit = np.array([0.0, 0.0, 0.0])  # initial xinit
+    ellip = Ell(10.0, xinit)
+    omega = MyOracle(oracle)
+    xbest, _, num_iters = cutting_plane_optim(omega, ellip, float("inf"))
     # time.sleep(duration)
 
     # fmt = '{:f} {} {} {}'
     # print(fmt.format(fb, niter, feasible, status))
-    # print(xb)
-    assert xb is not None
+    # print(xbest)
+    assert xbest is not None
     return num_iters
 
 
