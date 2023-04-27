@@ -3,7 +3,7 @@ from typing import Optional, Tuple, Union
 
 import numpy as np
 
-from .chol_ext import LDLTMgr
+from .ldlt_mgr import LDLTMgr
 
 Arr = Union[np.ndarray]
 Cut = Tuple[Arr, float]

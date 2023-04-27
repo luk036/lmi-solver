@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import numpy as np
-from .chol_ext import LDLTMgr
+from .ldlt_mgr import LDLTMgr
 from typing import Tuple
 
 Cut = Tuple[np.ndarray, float]

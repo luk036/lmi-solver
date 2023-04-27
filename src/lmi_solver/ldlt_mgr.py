@@ -1,10 +1,7 @@
 # -*- coding: utf-8 -*-
 import math
-from typing import Callable, Union
-
+from typing import Callable
 import numpy as np
-
-Arr = Union[np.ndarray]
 
 
 class LDLTMgr:
@@ -27,14 +24,13 @@ class LDLTMgr:
         Arguments:
             N (int): dimension
         """
-        self.allow_semidefinite = False
         self.p = (0, 0)
-        self.v: Arr = np.zeros(N)
+        self.v: np.ndarray = np.zeros(N)
 
         self._n: int = N
-        self._T: Arr = np.zeros((N, N))  # pre-allocate storage
+        self._T: np.ndarray = np.zeros((N, N))  # pre-allocate storage
 
-    def factorize(self, A: Arr) -> bool:
+    def factorize(self, A: np.ndarray) -> bool:
         """Perform Cholesky Factorization
 
         Arguments:
@@ -64,14 +60,41 @@ class LDLTMgr:
                 self._T[j, i] = d  # keep it for later use
                 self._T[i, j] = d / self._T[j, j]  # the L[i, j]
                 s = j + 1
-                d = get_elem(i, s) - (self._T[i, start:s] @ self._T[start:s, s])
+                d = get_elem(i, s) - \
+                    self._T[i, start:s].dot(self._T[start:s, s])
             self._T[i, i] = d
-            if d > 0.0:
-                continue
-            if d < 0.0 or not self.allow_semidefinite:
+            if d <= 0.0:
                 self.p = start, i + 1
                 break
-            start = i + 1  # T[i, i] == 0 (very unlikely), restart at i+1
+        return self.is_spd()
+
+    def factor_with_allow_semidefinite(
+        self, get_elem: Callable[[int, int], float]
+    ) -> bool:
+        """Perform Cholesky Factorization (square-root free version)
+
+        Arguments:
+            get_elem (callable): function to access symmetric matrix
+
+         Construct $A(i, j)$ on demand, lazy evalution
+        """
+        start = 0  # range start
+        self.p = (0, 0)
+        for i in range(self._n):
+            # j = start
+            d = get_elem(i, start)
+            for j in range(start, i):
+                self._T[j, i] = d  # keep it for later use
+                self._T[i, j] = d / self._T[j, j]  # the L[i, j]
+                s = j + 1
+                d = get_elem(i, s) - \
+                    self._T[i, start:s].dot(self._T[start:s, s])
+            self._T[i, i] = d
+            if d < 0.0:
+                self.p = start, i + 1
+                break
+            elif d == 0:
+                start = i + 1  # T[i, i] == 0 (very unlikely), restart at i+1
         return self.is_spd()
 
     def is_spd(self):
@@ -101,10 +124,10 @@ class LDLTMgr:
         m = n - 1
         self.v[m] = 1.0
         for i in range(m, start, -1):
-            self.v[i - 1] = -(self._T[i:n, i - 1] @ self.v[i:n])
+            self.v[i - 1] = -self._T[i:n, i - 1].dot(self.v[i:n])
         return -self._T[m, m]
 
-    def sym_quad(self, A: Arr):
+    def sym_quad(self, A: np.ndarray):
         """[summary]
 
         Arguments:
@@ -118,14 +141,14 @@ class LDLTMgr:
         v = self.v[s:n]
         return v @ A[s:n, s:n] @ v
 
-    def sqrt(self) -> Arr:
+    def sqrt(self) -> np.ndarray:
         """Return upper triangular matrix R where A = R' * R
 
         Raises:
             AssertionError: [description]
 
         Returns:
-            Arr: [description]
+            np.ndarray: [description]
         """
         if not self.is_spd():
             raise AssertionError()

@@ -1,9 +1,5 @@
-# -*- coding: utf-8 -*-
-from __future__ import print_function
-
 import numpy as np
-
-from lmi_solver.chol_ext import LDLTMgr
+from lmi_solver.ldlt_mgr import LDLTMgr
 
 
 def test_chol1():
@@ -73,10 +69,8 @@ def test_chol6():
     l3 = [[0.0, 15.0, -5.0], [15.0, 18.0, 0.0], [-5.0, 0.0, 11.0]]
     m3 = np.array(l3)
     Q = LDLTMgr(len(m3))
-    Q.allow_semidefinite = True
-    assert Q.factorize(m3)
-
-
+    # Q.allow_semidefinite = True
+    assert Q.factor_with_allow_semidefinite(lambda i, j: m3[i, j])
 #     [v, ep] = Q.witness2()
 #     assert len(v) == 1
 #     assert v[0] == 1.0
@@ -88,8 +82,9 @@ def test_chol7():
     l3 = [[0.0, 15.0, -5.0], [15.0, 18.0, 0.0], [-5.0, 0.0, -20.0]]
     m3 = np.array(l3)
     Q = LDLTMgr(len(m3))
-    Q.allow_semidefinite = True
-    assert not Q.factorize(m3)
+    # Q.allow_semidefinite = True
+    # assert not Q.factorize(m3)
+    assert not Q.factor_with_allow_semidefinite(lambda i, j: m3[i, j])
     ep = Q.witness()
     assert ep == 20.0
 
@@ -101,7 +96,7 @@ def test_chol8():
     l3 = [[0.0, 15.0, -5.0], [15.0, 18.0, 0.0], [-5.0, 0.0, 20.0]]
     m3 = np.array(l3)
     Q = LDLTMgr(len(m3))
-    Q.allow_semidefinite = False
+    # Q.allow_semidefinite = False
     assert not Q.factorize(m3)
 
 
@@ -112,5 +107,6 @@ def test_chol9():
     l3 = [[0.0, 15.0, -5.0], [15.0, 18.0, 0.0], [-5.0, 0.0, 20.0]]
     m3 = np.array(l3)
     Q = LDLTMgr(len(m3))
-    Q.allow_semidefinite = True
-    assert Q.factorize(m3)
+    # Q.allow_semidefinite = True
+    # assert Q.factorize(m3)
+    assert Q.factor_with_allow_semidefinite(lambda i, j: m3[i, j])
